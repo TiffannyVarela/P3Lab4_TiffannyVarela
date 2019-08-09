@@ -9,21 +9,23 @@ using namespace std;
 
 class Granja : public Edificio{
 	protected:
-		int precio_base, produccion_base;
 		int extras;
 		
 	public:
-		Granja():Edificio(){
-			precio_base=0;
-			produccion_base=5;
+		Granja():Edificio(50,5){
 		}
 		
-		int getPrecio_baseG(){
+		int getPrecio_base(){
 			return this->precio_base;
 		}
 		
-		int getProduccion_baseG(){
+		int getProduccion_base(){
 			return this->produccion_base;
+		}
+		
+		void setProduccion_base(int produccion_base)
+		{
+			produccion_base=0;
 		}
 			
 		void Aumento(){
@@ -32,6 +34,12 @@ class Granja : public Edificio{
 		
 		void Especial(){
 			extras=20;
+		}
+		
+		void Print(){
+			cout<<"Granja"<<endl;
+			cout<<"Precio Base: "<<precio_base<<endl;
+			cout<<"Produccion Base: "<<produccion_base<<endl;
 		}
 };
 

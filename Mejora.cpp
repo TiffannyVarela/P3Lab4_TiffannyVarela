@@ -18,9 +18,9 @@ class Mejora{
 			this->produccion=produccion;
 		}
 		
-		int Mejorar(){
-			return produccion;
-		}
+		virtual int Precio()=0;
+		virtual int Mejorar()=0;
+		virtual void Print()=0;
 };
 
 #endif

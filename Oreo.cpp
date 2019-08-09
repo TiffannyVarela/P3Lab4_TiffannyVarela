@@ -14,8 +14,17 @@ class Oreo : public Mejora{
 		Oreo(){
 		}
 		
-		int MejorarO(){
+		int Mejorar(){
 			return produccion=2;
+		}
+		
+		void Print(){
+			cout<<"Oreo"<<endl;
+			cout<<"Produccion X: "<<produccion<<endl;
+		}
+		
+		int Precio(){
+			return 100;
 		}
 };
 

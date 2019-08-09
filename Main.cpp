@@ -1,4 +1,5 @@
 #include <iostream>
+#include <typeinfo>
 #include <string.h>
 #include <iomanip>
 #include <vector>
@@ -15,11 +16,11 @@
 using namespace std;
 
 int menu();
-void ComprarGranja(int, vector<Edificio*>);
-void ComprarBanco(int, vector<Edificio*>);
-void ComprarTemplo(int, vector<Edificio*>);
-void ComprarOreo(int, vector<Mejora*>);
-void ComprarMigajas(int, vector<Mejora*>);
+void ComprarGranja(int&, vector<Edificio*>&, Granja*);
+void ComprarBanco(int&, vector<Edificio*>&, Banco*);
+void ComprarTemplo(int&, vector<Edificio*>&, Templo*);
+void ComprarOreo(int&, vector<Mejora*>&, Oreo*);
+void ComprarMigajas(int&, vector<Mejora*>&, Migajas*);
 
 int main(){
 	int opc =0;
@@ -27,35 +28,57 @@ int main(){
 	vector <Edificio*> edificios;
 	vector <Mejora*> mejoras;
 	int contOreo=0, contMigajas=0;
-	Granja* g;
-	Templo* t;
-	Banco* b;
+	Granja* g = new Granja();
+	Templo* t = new Templo();
+	Banco* b = new Banco();
+	Oreo* o = new Oreo();
+	Migajas* mi = new Migajas();
+	int cont=0;
 	do{
 		
 		switch(opc=menu()){
 			case 1:
-				if(edificios.empty()){
+				if(edificios.size()!=0){
 					for(int i=0; i<edificios.size(); i++){
-						//galletas+=edificios[i]
+						if(typeid(*edificios[i])==typeid(Banco) || typeid(*edificios[i])==typeid(Templo)){
+							edificios[i]->Especial();
+						}
+						if(typeid(*edificios[i])==typeid(Granja)){
+							cont++;
+						}
+						if(cont==10){
+							galletas+=20;
+							cont=0;
+						}
+						galletas+=edificios.at(i)->getProduccion_base();
+						//edificios.at(i)->setProduccion_base(0);
+						galletas++;
+					}
+					for(int i=0; i<mejoras.size(); i++){
+						galletas=galletas*mejoras.at(i)->Mejorar();
 					}
 				}
+				else{
+					galletas++;
+				}
+				cout<<"Galletas Obtenidas: "<<galletas<<endl;
 				break;
 				
 			case 2:
-				ComprarGranja(galletas, edificios);
+				ComprarGranja(galletas, edificios, g);
 				break;
 				
 			case 3:
-				ComprarBanco(galletas, edificios);
+				ComprarBanco(galletas, edificios, b);
 				break;
 				
 			case 4:
-				ComprarTemplo(galletas, edificios);
+				ComprarTemplo(galletas, edificios, t);
 				break;
 				
 			case 5:
 				if(contOreo==0){
-					ComprarOreo(galletas, mejoras);
+					ComprarOreo(galletas, mejoras, o);
 					contOreo++;
 				}
 				else{
@@ -65,7 +88,7 @@ int main(){
 				
 			case 6:
 				if(contMigajas==0){
-					ComprarMigajas(galletas, mejoras);
+					ComprarMigajas(galletas, mejoras, mi);
 					contMigajas++;
 				}
 				else{
@@ -76,14 +99,16 @@ int main(){
 			case 7:
 				cout<<"Edificios"<<endl;
 				for(int i=0; i<edificios.size(); i++){
-					cout<<"Edificio #: "<<i<<endl;
-					cout<<edificios[i]<<endl;
+					cout<<"Edificio #: "<<i+1<<endl;
+					edificios[i]->Print();
+					cout<<endl;
 				}
 				
 				cout<<"Mejoras"<<endl;
 				for(int i=0; i<mejoras.size(); i++){
-					cout<<"Mejora #: "<<i<<endl;
-					cout<<mejoras[i]<<endl;
+					cout<<"Mejora #: "<<i+1<<endl;
+					mejoras[i]->Print();
+					cout<<endl;
 				}
 				break;
 				
@@ -131,48 +156,51 @@ int menu(){
 	return 0;
 }
 
-void ComprarGranja(int x, vector<Edificio*> e){
-	Granja g;
-	cout<<g.getPrecio_baseG()<<endl;
-	if(x>=g.getPrecio_baseG()){
+void ComprarGranja(int& x, vector<Edificio*>& e, Granja* g){
+	cout<<g->getPrecio_base()<<endl;
+	if(x>=g->getPrecio_base()){
 		e.push_back(new Granja());
-		g.Aumento();
-		cout<<g.getPrecio_baseG()<<endl;		
+		x=x-g->getPrecio_base();
+		g->Aumento();
+		cout<<g->getPrecio_base()<<endl;	
+		cout<<x<<endl;		
 	}
 	else{
 		cout<<"Cantidad Insuficiente de Galletas"<<endl;
 	}
 }
 
-void ComprarBanco(int x, vector<Edificio*> e){
-	Banco b;
-	cout<<b.getPrecio_baseB()<<endl;
-	if(x>=b.getPrecio_baseB()){
+void ComprarBanco(int& x, vector<Edificio*>& e, Banco* b){
+	cout<<b->getPrecio_base()<<endl;
+	if(x>=b->getPrecio_base()){
 		e.push_back(new Banco());
-		b.Aumento();
-		cout<<b.getPrecio_baseB()<<endl;
+		x=x-b->getPrecio_base();
+		b->Aumento();
+		cout<<b->getPrecio_base()<<endl;
+		cout<<x<<endl;
 	}
 	else{
 		cout<<"Cantidad Insuficiente de Galletas"<<endl;
 	}
 }
 
-void ComprarTemplo(int x, vector<Edificio*> e){
-	Templo t;
-	cout<<t.getPrecio_baseT()<<endl;
-	if(x>=t.getPrecio_baseT()){
+void ComprarTemplo(int& x, vector<Edificio*>& e, Templo* t){
+	cout<<t->getPrecio_base()<<endl;
+	if(x>=t->getPrecio_base()){
 		e.push_back(new Templo());
-		cout<<t.getPrecio_baseT()<<endl;
+		x=x-t->getPrecio_base();
+		t->Aumento();
+		cout<<t->getPrecio_base()<<endl;
+		cout<<x<<endl;
 	}
 	else{
 		cout<<"Cantidad Insuficiente de Galletas"<<endl;
 	}
 }
 
-void ComprarOreo(int x, vector<Mejora*> m){
-	Oreo o;
-	cout<<o.MejorarO()<<endl;
-	if(x>=o.MejorarO()){
+void ComprarOreo(int& x, vector<Mejora*>& m, Oreo* o){
+	cout<<o->Mejorar()<<endl;
+	if(x>=o->Precio()){
 		m.push_back(new Oreo());
 	}
 	else{
@@ -180,10 +208,9 @@ void ComprarOreo(int x, vector<Mejora*> m){
 	}
 }
 
-void ComprarMigajas(int x, vector <Mejora*> m){
-	Migajas mi;
-	cout<<mi.MejorarM()<<endl;
-	if(x>=mi.MejorarM()){
+void ComprarMigajas(int& x, vector <Mejora*>& m, Migajas* mi){
+	cout<<mi->Mejorar()<<endl;
+	if(x>=mi->Precio()){
 		m.push_back(new Migajas());
 	}
 	else{

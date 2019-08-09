@@ -14,8 +14,17 @@ class Migajas : public Mejora{
 		Migajas(){
 		}
 		
-		int MejorarM(){
+		int Mejorar(){
 			return produccion=3;
+		}
+		
+		void Print(){
+			cout<<"Migajas"<<endl;
+			cout<<"Produccion X: "<<produccion<<endl;
+		}
+		
+		int Precio(){
+			return 1000;
 		}
 };
 

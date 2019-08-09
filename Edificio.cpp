@@ -19,26 +19,18 @@ class Edificio{
 			this->produccion_base=produccion_base;
 		}
 		
-		int getPrecio_base(){
-			return this->precio_base;
-		}
+		virtual int getPrecio_base()=0;		
 		
-		void setPrecio_base (int precio_base){
-			this->precio_base=precio_base;
-		}
+		virtual int getProduccion_base()=0;
 		
-		int getProduccion_base(){
-			return this->produccion_base;
-		}
+		virtual void setProduccion_base(int produccion_base)=0;
 		
-		void setProduccion_base (int produccion_base){
-			this->produccion_base=produccion_base;
-		}
-			
 			
 		virtual void Aumento()=0;
 		
 		virtual void Especial()=0;
+		
+		virtual void Print()=0;
 };
 
 #endif
