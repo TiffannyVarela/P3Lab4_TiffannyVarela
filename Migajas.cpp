@@ -14,7 +14,7 @@ class Migajas : public Mejora{
 		Migajas(){
 		}
 		
-		int Mejorar(){
+		int MejorarM(){
 			return produccion=3;
 		}
 };

@@ -36,13 +36,9 @@ class Edificio{
 		}
 			
 			
-		void Aumento(){
-			precio_base= precio_base+0;
-		}
+		virtual void Aumento()=0;
 		
-		void Especial(){
-			produccion_base=produccion_base+0;
-		}
+		virtual void Especial()=0;
 };
 
 #endif

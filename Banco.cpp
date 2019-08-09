@@ -9,9 +9,19 @@ using namespace std;
 
 class Banco : public Edificio{
 	protected:
-		
+		int precio_base, produccion_base;
 	public:
-		Banco():Edificio(100, 15){
+		Banco():Edificio(){
+			precio_base=100;
+			produccion_base=15;
+		}
+		
+		int getPrecio_baseB(){
+			return this->precio_base;
+		}
+		
+		int getProduccion_baseB(){
+			return this->produccion_base;
 		}
 		
 		void Aumento(){

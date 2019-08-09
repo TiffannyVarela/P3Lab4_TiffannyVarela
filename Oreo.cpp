@@ -14,7 +14,7 @@ class Oreo : public Mejora{
 		Oreo(){
 		}
 		
-		int Mejorar(){
+		int MejorarO(){
 			return produccion=2;
 		}
 };

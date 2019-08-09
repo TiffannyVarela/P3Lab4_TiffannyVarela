@@ -9,9 +9,19 @@ using namespace std;
 
 class Templo : public Edificio{
 	protected:
-		
+		int precio_base, produccion_base;
 	public:
-		Templo():Edificio(200, 30){
+		Templo():Edificio(){
+			precio_base=200;
+			produccion_base=30;
+		}
+		
+		int getPrecio_baseT(){
+			return this->precio_base;
+		}
+		
+		int getProduccion_baseT(){
+			return this->produccion_base;
 		}
 		
 		void Aumento(){
